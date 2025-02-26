@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+    <h1>Register</h1>
+    <h2>Your profile not found! Kindly register to fetch Gravatar profile if available</h2>
+    <p>Please fill in your details.</p>
+
+    <form action="{{ url_for('register') }}" method="POST">
+        {{ form.hidden_tag() }}
+        {{ form.email.label }}<br>
+        {% for error in form.email.errors %}
+            <p>! {{ error }} !</p>
+        {% endfor %}
+        {{ form.email(size=30) }}<br><br>
+        {{ form.name.label }}<br>
+        {{ form.name(size=30) }}<br><br>
+        {{ form.phone.label }}<br>
+        {{ form.phone(size=30) }}<br><br>
+        {{ form.location.label }}<br>
+        {{ form.location(size=30) }}<br><br>
+        {{ form.personalurl.label }}<br>
+        {{ form.personalurl(size=30) }}<br><br>
+        {{ form.bio.label }}<br>
+        {{ form.bio(rows=4, cols=50) }}<br><br>
+        {{ form.submit() }}
+    </form>
+</body>
+</html>

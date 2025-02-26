@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+<body>
+    <h1>Profile</h1>
+
+    <div>
+        <img src="{{ details.profile }}" alt="Profile Picture" width="80" height="80">
+        <p><strong>Email:</strong> {{ details.contact.email }}</p>
+        <p><strong>Name:</strong> {{ details.personal_detail.name }}</p>
+        <p><strong>Phone:</strong> {{ details.contact.phone }}</p>
+        <p><strong>Location:</strong> {{ details.personal_detail.location }}</p>
+        <p><strong>Gravatar URL:</strong> <a href="{{ details.personal_detail.url }}" target="_blank">{{ details.personal_detail.url }}</a></p>
+        <p><strong>Bio:</strong> {{ details.bio }}</p>
+        <p><strong>Social Profile:</strong> <a href="{{ details.social_profile }}" target="_blank">{{ details.social_profile }}</a></p>
+    </div>
+
+    <a href="{{ url_for('index') }}">Back to Home</a>
+</body>
+</html>
