@@ -24,7 +24,7 @@ def get_gravatordata():
     response=requests.get(f'https://api.gravatar.com/v3/profiles/{email_hash}')
     if response.status_code==200:
         res=response.json()
-        gravatordata={'hash':res['hash'],'url':res['profile_url'],'image_url':res['avatar_url'],'location':res['location'],'bio':res['description']}
+        gravatordata={'hash':res['hash'],'name':res['display_name'],'url':res['profile_url'],'image_url':res['avatar_url'],'location':res['location'],'bio':res['description']}
         return jsonify(gravatordata),200
     else:
         return jsonify({'message':'profile not found'}),404
@@ -52,17 +52,20 @@ def add_userdata():
 #gets email hash as json body and get data from redis using that hash which is stored as key
 @app.route('/api/getuserdata',methods=['GET'])
 def get_userdata():
-      data=request.json
-      emailhash=data.get('emailhash')
+    data=request.json
+    email=data.get('email')
+    
+    if not email:
+        return jsonify({"message":"Invalid data provided"}),400
       
-      if not emailhash:
-          return jsonify({"message":"Invalid data provided"}),400
+    encoded_email=email.lower().encode('utf-8')
+    email_hash=hashlib.sha256(encoded_email).hexdigest()  
+     
+    userdata=r.hget('userdata',email_hash)
       
-      userdata=r.hget('userdata',emailhash)
-      
-      if userdata:
-          jsondata=json.loads(userdata)
-          return jsonify(jsondata),200
-      else:
-          return jsonify({"message":"Error while retriving data"}),404
+    if userdata:
+        jsondata=json.loads(userdata)
+        return jsonify(jsondata),200
+    else:
+        return jsonify({"message":"Error while retriving data"}),404
         
