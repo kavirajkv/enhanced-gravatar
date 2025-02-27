@@ -1,10 +1,11 @@
 from flask import Flask
-import redis
+import redis,os
 
 app=Flask(__name__)
 app.secret_key ='kavi1234' 
 
-redisconnect=redis.Redis(host='localhost', port=6379)
+redis_host=os.getenv('REDIS_HOST')
+redisconnect=redis.Redis(host=redis_host, port=6379)
 
 from app import views
 
